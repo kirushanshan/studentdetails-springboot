@@ -2,9 +2,11 @@ package com.sgic.student.manage.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,6 +42,30 @@ public class StudentDetailsController {
 	public ResponseEntity<Object> getStudentDetailById(@PathVariable int id) {
 		
 		return ResponseEntity.ok(studentService.getStudentById(id));
+	}
+	
+	@DeleteMapping("/student/delete/{id}")
+	public ResponseEntity<Object> deleteStudentDetailById(@PathVariable int id) {
+		
+		return ResponseEntity.ok(studentService.deleteStudentDetail(id));
+	}
+	
+	@PutMapping("/student/update/{id}")
+	public ResponseEntity<Object> updateStudentDetail(@PathVariable int id, @RequestBody StudentDetailDto std) {
+		Student student = new Student();
+		student.setId(id);
+		student.setFullName(std.getFullName());
+		student.setEmail(std.getEmail());
+		student.setAge(std.getAge());
+		student.setGender(std.getGender());
+		student.setAddress(std.getAddress());
+		
+		return ResponseEntity.ok(studentService.updateStudentDetail(student));
+	}
+	
+	@GetMapping("/student/all/details")
+	public ResponseEntity<Object> getAllStudentDetails() {
+		return ResponseEntity.ok(studentService.getAllStudentDetails());
 	}
 }
 

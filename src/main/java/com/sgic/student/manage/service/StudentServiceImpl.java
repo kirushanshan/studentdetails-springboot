@@ -1,5 +1,7 @@
 package com.sgic.student.manage.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,38 @@ public class StudentServiceImpl implements StudentService {
 		stDto.setAddress(student.getAddress());
 		
 		return stDto;
+	}
+
+	@Override
+	public String deleteStudentDetail(int id) {
+		String response;
+		try {
+			studentRepositry.deleteById(id);
+			response = "Sucessfully delete student detail";
+		}catch (Exception e) {
+			response = "unSucessfully delete student detail";
+		}
+		
+		return response;
+	}
+
+	@Override
+	public String updateStudentDetail(Student student) {
+		String response;
+		try {
+			studentRepositry.saveAndFlush(student);
+			response = "sucessfully updated";
+		}catch(Exception e) {
+			response = "unsucessfully updated";
+		}
+		
+		return response;
+	}
+
+	@Override
+	public List<Student> getAllStudentDetails() {
+		
+		return studentRepositry.findAll();
 	}
 
 }
